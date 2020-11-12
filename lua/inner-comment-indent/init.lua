@@ -1,7 +1,7 @@
 local ici = {}
 
 ici.get_comment_delimiter = function()
-  return comment_delimiter = vim.api.nvim_command(":echo split(&commentstring, '%s')[0]")
+  return vim.api.nvim_command(":echo split(&commentstring, '%s')[0]")
 end
 
 ici.inner_indent_comment = function()
