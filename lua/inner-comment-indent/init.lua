@@ -1,9 +1,9 @@
 local ici = {}
 
 ici.get_comment_delimiter = function()
-  -- return vim.api.nvim_get_option(":echo split(&commentstring, '%s')[0]")
-  print(vim.api.nvim_get_option("&commentstring"))
-  return vim.api.nvim_get_option("&commentstring")
+  -- this should be something like "// %s"
+  local cstring = vim.api.nvim_buf_get_option(0, "commentstring")
+  return cstring:gsub("%s", "")
 end
 
 ici.inner_indent_comment = function()
