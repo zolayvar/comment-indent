@@ -1,19 +1,23 @@
-local ici = {}
+local ci = {}
 
-ici.get_comment_delimiter = function()
-  -- this should be something like "// %s"
+ci.get_comment_delimiter = function()
+  -- this should be something like "// %s" or "--%s"
   local cstring = vim.api.nvim_buf_get_option(0, "commentstring")
-  return cstring:gsub("%s", "")
+  local delimiter, _ = string.gsub(cstring, "%%s", "")
+  local escaped_delimiter, _ = string.gsub(delimiter, "/", "\\/")
+  return escaped_delimiter
 end
 
-ici.inner_indent_comment = function()
-  local comment_delimiter = ici.get_comment_delimiter()
-  vim.api.nvim_command([[:'<,'> s/]] .. comment_delimiter .. [[/]] .. comment_delimiter .. [[  / | gv]])
+ci.indent_comment = function()
+  local d = ici.get_comment_delimiter()
+  vim.api.nvim_command([[:'<,'> s/]] .. d .. [[/]] .. d .. [[  /]])
+  vim.api.nvim_input([[gv]])
 end
 
-ici.inner_unindent_comment = function()
-  local comment_delimiter = ici.get_comment_delimiter()
-  vim.api.nvim_command([[:'<,'> s/]] .. comment_delimiter .. [[  /]] .. comment_delimiter .. [[/ | gv]])
+ci.unindent_comment = function()
+  local d = ici.get_comment_delimiter()
+  vim.api.nvim_command([[:'<,'> s/]] .. d .. [[  /]] .. d .. [[/]])
+  vim.api.nvim_input([[gv]])
 end
 
-return ici
+return ci
