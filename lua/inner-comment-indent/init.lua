@@ -9,13 +9,13 @@ ci.get_comment_delimiter = function()
 end
 
 ci.indent_comment = function()
-  local d = ici.get_comment_delimiter()
+  local d = ci.get_comment_delimiter()
   vim.api.nvim_command([[:'<,'> s/]] .. d .. [[/]] .. d .. [[  /]])
   vim.api.nvim_input([[gv]])
 end
 
 ci.unindent_comment = function()
-  local d = ici.get_comment_delimiter()
+  local d = ci.get_comment_delimiter()
   vim.api.nvim_command([[:'<,'> s/]] .. d .. [[  /]] .. d .. [[/]])
   vim.api.nvim_input([[gv]])
 end
